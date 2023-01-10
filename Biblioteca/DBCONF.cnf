@@ -1,0 +1,7 @@
+[client]
+database = Biblioteca
+host= localhost
+user = admin
+password = @123admin
+
+default-character-set = utf8

@@ -1,0 +1,77 @@
+{% extends '../base/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<h1> Listagem Empréstimos</h1>
+
+<div class="table-responsive">
+<table id="tbllivros"class="table table-bordered table-striped">
+    <thead  class="table-light text-center">
+        <tr>
+            <th>#</th>            
+            <th>Livro</th>
+            <th>Marca</th>
+            <th>Usuário</th>
+            <th>Empréstimo</th>
+            <th>Prazo Devolução</th>
+            <th>Devolução</th>
+            <th>Situação</th>           
+            <th>Ativo</th>
+            <th>
+                {% if user.groups.all.0.name == "Administrador" %}        
+                    <a href="{% url 'cadastrar-emprestimo' %}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top"  title="Novo"> <i class="fas fa-plus" aria-hidden="true"></i> Novo</a>
+                {% endif %}    
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+       {% for campo in object_list %}
+        <tr>
+        <td class="text-center">{{ campo.emprestimoID }}</td>        
+        <td class="text-center">{{ campo.livro }}</td>
+        <td class="text-center">{{ campo.marca }}</td>
+        <td class="text-center">{{ campo.usuario }}</td>
+        <td class="text-center">{{ campo.dataEmprestimo|date:"SHORT_DATE_FORMAT" }}</td>
+        <td class="text-center">{{ campo.dataPrazoDevolucao|date:"SHORT_DATE_FORMAT" }}</td>
+        <td class="text-center">{{ campo.dataDevolucao|date:"SHORT_DATE_FORMAT" }}</td>
+        <td class="text-center">
+            {%if campo.esta_atrasado%}
+            <span class="badge bg-danger">
+                Atrasado
+            </span>    
+            {%else%}
+            <span class="badge bg-success">
+                Em Dia 
+            </span>
+            {%endif%}       
+        </td>       
+        <td class="text-center">
+            {%if campo.is_active == True%}
+                Sim
+            {%else%}
+            <span class="badge bg-danger">
+                Não 
+            </span>
+            {%endif%}       
+        </td>        
+        {% if user.groups.all.0.name == "Administrador" %}
+            <td class="text-center">        
+                <a href="{% url 'editar-emprestimo' campo.emprestimoID %}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"  title="Editar"> <i class="fas fa-edit" aria-hidden="true"></i> Editar</a>
+            </td>
+        {% else %}
+            <td></td>
+        {% endif %}
+        </tr>
+       {% empty %}
+        <!--tr> 
+            <td class="bg-danger text-center text-white" colspan="9">
+            Nenhum Registro encontrado
+            </td>
+        </tr-->    
+       {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

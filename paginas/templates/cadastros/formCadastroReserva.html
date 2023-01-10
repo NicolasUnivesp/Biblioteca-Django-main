@@ -1,0 +1,62 @@
+{% extends 'base/modelo.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block conteudo %}
+<div class="card text-dark bg-light mb-3">
+    <h2 class="card-header text-center">
+        Reservar Livro
+    </h2>
+    <div class="card-body">
+        <h3 class="card-title lead text-danger">* Preencha todos os campos obrigatórios.</h3>
+        <hr>
+        <form  action="" method="POST">
+            {% csrf_token %}
+            <div class="row mb-2"> 
+                <div class="col-md-12">
+                    {{ form.nomeSolicitante|as_crispy_field }}
+                </div>            
+                <div class="col-md-12">
+                    {{ form.livro|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-3">
+                    {{ form.dataReserva|as_crispy_field }}      
+                </div>         
+                <div class="col-md-4 d-flex align-items-end">
+                    {{ form.is_active|as_crispy_field }}      
+                </div>
+            </div>
+
+            <div class="card-footer text-muted">  
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success mt-1 mx-1" title = "Salvar">        
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Gravar
+                    </button>
+                    <button type="reset" class="btn btn-warning mt-1 mx-1" title = "Limpar">        
+                        <i class="fa fa-eraser" aria-hidden="true"></i>
+                        Limpar
+                    </button>
+                    <a class="btn btn-secondary mt-1 mx-1" title = "Voltar" href="{{ link }}">           
+                        <i class="fas fa-door-closed"></i>
+                        Voltar
+                    </a>
+                </div>
+            </div>    
+        </form>
+    </div>
+</div>        
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/jquery.mask.min.js' %}"></script>
+<script>
+$(document).ready(function(){    
+    $('#id_dataReserva').mask('00/00/0000', {placeholder: "__/__/____"});    
+})    
+</script>
+{% endblock %}

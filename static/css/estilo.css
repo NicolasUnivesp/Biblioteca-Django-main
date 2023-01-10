@@ -1,0 +1,134 @@
+/* 
+Cores 
+*/
+
+.bg-pagina {
+    background-color: #e3e3e3;
+}
+
+.text-pagina {
+    color: #ffffff;
+}
+
+.border-pagina {
+    border-color: #808080;
+}
+
+.bg-pagina-escuro {
+    background-color: #303030;
+}
+
+.text-pagina-escuro {
+    color: #303030;
+}
+
+.border-pagina-escuro {
+    border-color: #303030;
+}
+
+
+/* 
+Tamanhos diferentes para fontes 
+*/
+
+.font-75 {
+    font-size: 75%;
+}
+
+.font-115 {
+    font-size: 115%;
+}
+
+.font-125 {
+    font-size: 125%;
+}
+
+.font-150 {
+    font-size: 150%;
+}
+
+.font-175 {
+    font-size: 175%;
+}
+
+
+/* 
+Formatação do DataTable 
+*/
+
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child::before,
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child::before {
+    top: 15px !important;
+}
+
+
+/* 
+Personalização da Barra de menu pra ficar igual do site 
+*/
+
+.navbar {
+    padding: 0 !important;
+    background-color: #808080;
+}
+
+.navbar .navbar-brand {
+    padding-left: 10px;
+}
+
+.navbar a.nav-link {
+    color: white !important;
+}
+
+.navbar .nav-item {
+    padding: 3px 5px;
+}
+
+.navbar .nav-item:hover {
+    background-color: #303030;
+}
+
+
+/* 
+Alerta na validação dos formulários (login com senha errada, por exemplo) 
+*/
+
+.alert dl,
+.alert ol,
+.alert ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+/*
+Largura máxima das tabelas para não ficar mal formatada
+*/
+
+table td {
+    max-width: 500px;
+}
+
+.dropdown-hover-all .dropdown-menu,
+.dropdown-hover>.dropdown-menu.dropend {
+    margin-left: -1px !important
+}
+
+.circulo-pequeno {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 3px;
+    float: left;
+}
+
+.vermelho {
+    background-color: red;
+}
+
+.verde {
+    background-color: green;
+}
+
+.branco {
+    background-color: antiquewhite;
+}

@@ -1,0 +1,24 @@
+{% extends 'base/modelo.html' %}
+{% load static %}
+{% block titulo %}
+<title> Sobre o EspaçOn </title>
+{% endblock %}
+
+{% block destaque %}
+{% endblock %}
+
+{% block conteudo %}
+<div class="d-flex flex-fill pt-5 flex-column justify-content-center align-items-center">
+    <div class="card w-50 bg-pagina-escuro bg-gradient text-white">  
+        <div class="col-md-12 mx-auto text-center">
+            <h5 class="card-title text-pagina">                       
+                <p>Sistema EspaçOn (2022)</p> 
+                <hr/>
+                <p>Desenvolvido por Pólo Araçoiaba/Conchas/Sorocaba </p>
+            </h5>
+            <hr/>
+            <img src="{% static 'img/Univesp.png' %}" height="50" class="float-left mt-2" alt="">
+        </div>  
+    </div>
+</div>
+{% endblock %}

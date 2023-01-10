@@ -1,0 +1,59 @@
+{% extends '../base/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<h1> Listagem das Reservas</h1>
+
+<div class="table-responsive">
+<table id="tblreservas"class="table table-bordered table-striped">
+    <thead  class="table-light text-center">
+        <tr>
+            <th>#</th>            
+            <th>Solicitante</th>
+            <th>Livro</th>
+            <th>Reservado para</th>
+            <th>Criado em</th>
+            <th>Alterado em</th>
+            <th>Ativo</th>
+            <th>
+                <a href="{% url 'cadastrar-reserva' %}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top"  title="Novo"> <i class="fas fa-plus" aria-hidden="true"></i> Novo</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+       {% for campo in object_list %}
+        <tr>
+        <td class="text-center">{{ campo.reservaID }}</td>        
+        <td class="text-center">{{ campo.nomeSolicitante }}</td>
+        <td class="text-center">{{ campo.livro }}</td>
+        <td class="text-center">{{ campo.dataReserva |date:"SHORT_DATE_FORMAT"}}</td>
+        <td class="text-center">{{ campo.createdAt |date:"SHORT_DATETIME_FORMAT"}}</td>
+        <td class="text-center">{{ campo.updatedAt |date:"SHORT_DATETIME_FORMAT"}}</td>
+        <td class="text-center">
+            {%if campo.is_active == True%}
+                Sim
+            {%else%}
+            <span class="badge bg-danger">
+                Não 
+            </span>
+            {%endif%}       
+        </td>        
+        <td class="text-center">        
+            {% if user.groups.all.0.name == "Administrador" %}   
+                <a href="{% url 'editar-reserva' campo.reservaID %}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"  title="Editar"> <i class="fas fa-edit" aria-hidden="true"></i> Editar</a>
+            {% endif %}                    
+        </td> 
+        </tr>
+       {% empty %}
+        <!--tr> 
+            <td class="bg-danger text-center text-white" colspan="7">
+            Nenhum Registro
+            </td>
+        </tr-->    
+       {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

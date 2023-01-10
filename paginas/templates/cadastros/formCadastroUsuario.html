@@ -1,0 +1,121 @@
+{% extends 'base/modelo.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block conteudo %}
+<div class="card text-dark bg-light mb-3">
+    <h2 class="card-header text-center">
+        Cadastro do Usuário
+    </h2>
+    <div class="card-body">
+        <h3 class="card-title lead text-danger">* Preencha todos os campos obrigatórios.</h3>
+        <hr>
+        <form  action="" method="POST">
+            {% csrf_token %}
+            <!-- form|crispy -->
+            <div class="row"> 
+                <div class="col-md-4">
+                    {{ form.nome|as_crispy_field }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.sobrenome|as_crispy_field }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.rg|as_crispy_field }}      
+                </div>
+                <div class="col-md-2">
+                    {{ form.nascimento|as_crispy_field }}      
+                </div>
+                <div class="col-md-2">
+                    {{ form.sexo|as_crispy_field }}      
+                </div>
+                <div class="col-md-2">
+                    {{ form.telefone|as_crispy_field }}      
+                </div>
+                <div class="col-md-2">
+                    {{ form.celular|as_crispy_field }}      
+                </div>
+                <div class="col-md-3">
+                    {{ form.email1|as_crispy_field }}      
+                </div>
+                <div class="col-md-3">
+                    {{ form.email2|as_crispy_field }}      
+                </div>
+                <div class="col-md-6">
+                    {{ form.endereco|as_crispy_field }}      
+                </div>
+                <div class="col-md-2">
+                    {{ form.numero|as_crispy_field }}      
+                </div>
+                <div class="col-md-4">
+                    {{ form.bairro|as_crispy_field }}      
+                </div>
+                <div class="col-md-6">
+                    {{ form.municipio|as_crispy_field }}      
+                </div>
+                    <div class="col-md-3">
+                    {{ form.estado|as_crispy_field }}      
+                </div>
+                <div class="col-md-3">
+                    {{ form.cep|as_crispy_field }}      
+                </div>
+                <div class="col-md-2">
+                    {{ form.serie|as_crispy_field }}      
+                </div>
+                <div class="col-md-2">
+                    {{ form.grupo|as_crispy_field }}      
+                </div>
+                <div class="col-md-2">
+                    {{ form.usuario|as_crispy_field }}      
+                </div>
+            </div>
+            <div class="row mb-2">    
+                <div class="col-md-4 d-flex align-items-end">
+                    {{ form.is_active|as_crispy_field }}      
+                </div>
+            </div>
+
+            <div class="card-footer text-muted">  
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success mt-13 mx-1" title = "Salvar">        
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Gravar
+                    </button>
+                    <button type="reset" class="btn btn-warning mt-1 mx-1" title = "Limpar">        
+                        <i class="fa fa-eraser" aria-hidden="true"></i>
+                        Limpar
+                    </button>
+                    <a class="btn btn-secondary mt-1 mx-1" title = "Voltar" href="{{ link }}">           
+                        <i class="fas fa-door-closed"></i>
+                        Voltar
+                    </a>
+                </div>
+            </div> 
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/jquery.mask.min.js' %}"></script>
+
+<script>
+    $(document).ready(function(){
+        $("#id_rg").keypress(function(e) {
+           var keyCode = e.which ? e.which : e.keyCode
+           if (!(keyCode >= 48 && keyCode <= 57))
+               return false;
+ 
+            if(this.value.length > 13)
+               return false      
+        })  
+        $('#id_telefone').mask('(00) 0000-0000');
+        $('#id_celular').mask('(00) 00000-0000');
+        $('#id_nascimento').mask('00/00/0000', {placeholder: "__/__/____"});
+        $('#id_cep').mask('00000-000');
+       
+    });
+</script>
+{% endblock %}

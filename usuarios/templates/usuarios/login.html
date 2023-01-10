@@ -1,0 +1,38 @@
+{% extends 'base/modelo.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block menu %}
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="row">    
+            
+            <div class="col-md-4 mx-auto">
+                <h3 class="text-center">Autenticação</h3>
+                <hr/>
+                <form  action="" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-success mt-3 mx-1" title = "Login">        
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>    
+      
+</div>        
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+
+</script>
+{% endblock %}

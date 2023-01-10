@@ -1,0 +1,300 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-br" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="PI 2022 - Araçoiaba/Conchas/Sorocaba">
+    <meta name="author" content="UNIVESP - Polo Araçoiaba/Conchas/Sorocaba 2022">
+
+    {% block titulo %}
+    <title>:: Biblioteca EspaçOn::</title>
+    {% endblock %}
+
+    <!-- Ícone do favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- Importação do Bootstrap 5, Datatables e do Font awesome -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/all.css' %}" rel="stylesheet">
+	<link href="{% static 'css/datatables.css' %}" rel="stylesheet">
+
+    <!-- CSS adicional -->
+    <link href="{% static 'css/estilo.css' %}" rel="stylesheet">
+   
+    <!-- Ícone na barra de abas -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}"> 
+
+    <!-- Bloco destinado aos estilos para cada página -->
+    {% block styles %}
+
+    {% endblock %}
+
+</head>
+
+<body class="d-flex flex-column h-100">   
+        <nav class="navbar navbar-expand-lg navbar-dark bg-gradient shadow">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'img/favicon.ico' %}" height="40" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <!-- Bloco com o menu principal -->
+                    {% block menu %}
+                    <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'index' %}">
+                                    <i class="fa fa-home" aria-hidden="true"></i>
+                                    Início
+                                </a>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                                {% if user.groups.all.0.name == 'Alunos' %}
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuEmprestimos"
+                                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                        Empréstimos
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuEmprestimos">
+                                        <a class="dropdown-item" href=" {% url 'listar-emprestimo' %} ">
+                                              Listar Empréstimos
+                                        </a>                                        
+                                    </div>                                    
+                                </li>    
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuReservas"
+                                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                        Reservas
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuReservas">
+                                        <a class="dropdown-item" href=" {% url 'listar-reserva' %} ">
+                                              Listar Reservas
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href=" {% url 'cadastrar-reserva' %} ">
+                                              Nova Reserva
+                                        </a>
+                                    </div>
+                                </li>
+                                {% endif %}    
+                                {% if user.groups.all.0.name == "Administrador" %}                         
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuManutencao"
+                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                            Manutenção
+                                        </a>                                    
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuManutencao">
+                                            <li class="dropdown dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#" id="ManutencaoGeneros"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                                
+                                                    Gêneros
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="ManutencaoGeneros">
+                                                    <li><a class="dropdown-item" href=" {% url 'cadastrar-genero' %} ">Cadastrar Gêneros</a></li>
+                                                    <li><hr class="dropdown-divider"></hr></li>
+                                                    <li><a class="dropdown-item" href=" {% url 'listar-genero' %} ">Listar Gêneros</a></li>                                                    
+                                                </ul>    
+                                            </li>    
+                                            <li class="dropdown dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#" id="ManutencaoIdiomas"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                                
+                                                    Idiomas
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="Manutencaoidiomas">                                        
+                                                    <li><a class="dropdown-item" href=" {% url 'cadastrar-idioma' %} ">Cadastrar Idioma</a></li>
+                                                    <li><hr class="dropdown-divider"></hr></li>
+                                                    <li><a class="dropdown-item" href=" {% url 'listar-idioma' %} ">Listar idiomas</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#" id="ManutencaoAutores"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                                
+                                                    Autores
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="ManutencaoAutor">                                        
+                                                    <li><a class="dropdown-item" href=" {% url 'cadastrar-autor' %} ">Cadastrar Autor</a></li>
+                                                    <li><hr class="dropdown-divider"></hr></li>
+                                                    <li><a class="dropdown-item" href=" {% url 'listar-autor' %} ">Listar Autor</a></li>
+                                                </ul>
+                                            </li>                                           
+                                            <li class="dropdown dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#" id="ManutencaoLivros"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                                
+                                                    Empréstimos
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="ManutencaoEmprestimos">                                        
+                                                    <li><a class="dropdown-item" href=" {% url 'cadastrar-emprestimo' %} ">Cadastrar Empréstimo</a></li>
+                                                    <li><hr class="dropdown-divider"></hr></li>
+                                                    <li><a class="dropdown-item" href=" {% url 'listar-emprestimo' %} ">Listar Empréstimos</a></li>
+                                                </ul>
+                                            </li>                                            
+                                            <li class="dropdown dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#" id="ManutencaoLivros"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                                
+                                                    Livros
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="ManutencaoLivros">                                        
+                                                    <li><a class="dropdown-item" href=" {% url 'cadastrar-livro' %} ">Cadastrar Livro</a></li>
+                                                    <li><hr class="dropdown-divider"></hr></li>
+                                                    <li><a class="dropdown-item" href=" {% url 'listar-livro' %} ">Listar Livro</a></li>
+                                                </ul>
+                                            </li>                                            
+                                            <li class="dropdown dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#" id="ManutencaoReservas"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                                
+                                                    Reservas
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="ManutencaoReservas">                                        
+                                                    <li><a class="dropdown-item" href=" {% url 'cadastrar-reserva' %} ">Cadastrar Reserva</a></li>
+                                                    <li><hr class="dropdown-divider"></hr></li>
+                                                    <li><a class="dropdown-item" href=" {% url 'listar-reserva' %} ">Listar Reserva</a></li>
+                                                </ul>
+                                            </li> 
+                                            <div class="dropdown-divider"></div>
+                                            <li class="dropdown dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#" id="ManutencaoUsuarios"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                                
+                                                    Usuários
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="ManutencaoUsuarios">                                        
+                                                    <li><a class="dropdown-item" href=" {% url 'cadastrar-usuario' %} ">Cadastrar Usuário</a></li>
+                                                    <li><hr class="dropdown-divider"></hr></li>
+                                                    <li><a class="dropdown-item" href=" {% url 'listar-usuario' %} ">Listar Usuário</a></li>
+                                                </ul>
+                                            </li>   
+                                            <div class="dropdown-divider"></div>
+                                            <li class="dropdown dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#" id="ManutencaoUsuarios"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                                
+                                                    Login
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="Manutencaologin">                                        
+                                                    <li><a class="dropdown-item" href=" {% url 'registrar-login' %} ">Cadastrar Login</a></li>                                                    
+                                                </ul>
+                                            </li>   
+
+                                        </ul>    
+                                    </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuRelatorios"
+                                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                        Gráficos
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuGrafico">
+                                        <a class="dropdown-item"  href="{% url 'livro-chart' %}">
+                                              Melhores Avaliados
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                    </div>
+                                </li>
+                                {% endif %}                                    
+                            {% endif %}
+                            
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{% url 'sobre' %}">
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    Sobre
+                                </a>
+                            </li>                                                       
+                    </ul>                   
+                    <ul class="navbar-nav">
+                        {% if request.user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                    <span id="username">{{ request.user }}</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                        Alterar senha</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{% url 'logout' %} ">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                        Sair</a>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item ">
+                                <a class="nav-link"  href=" {% url 'registrar' %}">
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                    Registrar
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link"  href=" {% url 'login' %}">
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                    Login
+                                </a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+                    {% endblock %}    
+                </div>
+
+                <!-- fim do container -->
+            </div>
+        </nav>
+       
+    <main role="main" class="flex-shrink-0 bg-pagina flex-fill">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible fade show {% if message.tags %}alert-{{ message.tags }}{% endif %} role='alert'">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Bloco de conteúdo -->
+        <div class="container-fluid py-3">
+            {% block conteudo %}
+            
+            {% endblock %}
+        </div>
+
+    </main>
+
+    <footer class="mt-auto bg-pagina-escuro bg-gradient">
+        <!-- Rodapé -->
+        {% block rodape %}
+        <div class="container-fluid text-center pt-3">
+            <div class="row">
+                <div class="d-flex justify-content-between col-md-12 mx-auto text-center">
+                    <img src="{% static 'img/Univesp.png' %}" height="48"  alt="">
+                    <p class="font-weight-bold text-pagina">                       
+                        Desenvolvido por Polo Araçoiaba/Conchas/Sorocaba (2022)
+                    </p>
+                </div>              
+            </div>
+            {% endblock %}
+
+    </footer>
+
+
+    <!-- Importação do JS -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js' %}"></script>   
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/datatables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Biblioteca.js' %}"></script>
+    <!-- Bloco destinado aos scripts para cada página -->
+    {% block scripts %}
+       
+    {% endblock %}
+
+</body>
+
+</html>

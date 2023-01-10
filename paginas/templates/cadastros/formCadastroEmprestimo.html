@@ -1,0 +1,113 @@
+{% extends 'base/modelo.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block conteudo %}
+<div class="card text-dark bg-light mb-3">
+    <h2 class="card-header text-center">
+        Cadastro do Empréstimo
+    </h2>
+    <div class="card-body">
+        <h3 class="card-title lead text-danger">* Preencha todos os campos obrigatórios.</h3>
+        <hr>
+        <form  action="" method="POST">
+            {% csrf_token %}
+            <!-- form|crispy -->            
+            <div class="row"> 
+                <small id="estoque"></small>
+                <div class="col-md-4">
+                    {{ form.livro|as_crispy_field }}                    
+                </div>
+                <div class="col-md-4">
+                    {{ form.marca|as_crispy_field }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.usuario|as_crispy_field }}      
+                </div>        
+            </div>
+            <div class="row">         
+                <div class="col-md-3">
+                    {{ form.dataEmprestimo|as_crispy_field }}      
+                </div>            
+                <div class="col-md-3">
+                    {{ form.dataPrazoDevolucao|as_crispy_field }}      
+                </div>
+            </div>    
+            <div class="row">         
+                <hr/>
+                <h5 class="card-header text-center">
+                    Devolução
+                </h5>
+                
+                <div class="col-md-3">
+                    {{ form.dataDevolucao|as_crispy_field }}      
+                </div>
+                <div class="col-md-3">
+                    {{ form.avaliacao|as_crispy_field }}      
+                </div>
+            </div>
+            <div class="row mb-2">    
+                <div class="col-md-4 d-flex align-items-end">
+                    {{ form.is_active|as_crispy_field }}      
+                </div>
+            </div>
+
+            <div class="card-footer text-muted">  
+                <div class="btn-group">
+                    <button id="btnemprestar" type="submit" class="btn btn-success mt-13 mx-1" title = "Salvar">        
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Gravar
+                    </button>
+                    <button type="reset" class="btn btn-warning mt-1 mx-1" title = "Limpar">        
+                        <i class="fa fa-eraser" aria-hidden="true"></i>
+                        Limpar
+                    </button>
+                    <a class="btn btn-secondary mt-1 mx-1" title = "Voltar" href="{{ link }}">           
+                        <i class="fas fa-door-closed"></i>
+                        Voltar
+                    </a>
+                </div>
+            </div> 
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/jquery.mask.min.js' %}"></script>
+<script>
+$(document).ready(function(){
+    $('#id_sumario').attr('rows','5');
+    $('#id_dataEmprestimo,#id_dataDevolucao,#id_dataPrazoDevolucao').mask('00/00/0000', {placeholder: "__/__/____"});
+    $('#id_dataEmprestimo,#id_dataPrazoDevolucao').attr('readonly', true);
+
+    $("#id_livro").change(function() {
+        $('#estoque').html("");
+        var livroid = $(this).val();
+        if(isNaN(livroid) || livroid == ''){
+            return;
+        }                    
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'pegaEstoque' %}",
+            data: {"livroid": livroid},
+            success: function (response) {                
+                if(response["qtdeestoque"] > 0){                    
+                    $('#estoque').append('<div class="badge bg-success">Quantidade disponível '+response["qtdeestoque"]+'</div>');    
+                    $('#btnemprestar').prop('disabled', false);    
+                }else{
+                    alert("Livro Indisponível no momento");
+                    $('#estoque').append('<div class="badge bg-danger">Livro indisponível no momento - Qtde. '+response["qtdeestoque"]+'</div>');    
+                    $('#btnemprestar').prop('disabled', true);    
+                }
+            },
+            error: function (jqXHR, textStatus,errorThrown ) {
+                alert(errorThrown);
+            }
+        })
+     }); 
+})    
+</script>
+{% endblock %}

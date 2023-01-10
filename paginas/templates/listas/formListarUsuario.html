@@ -1,0 +1,63 @@
+{% extends 'base/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<h1> Listagem Usuários</h1>
+
+<div class="table-responsive">
+<table id="tblusuarios" class="table table-bordered table-striped">
+    <thead  class="table-light text-center">
+        <tr>
+            <th>#</th>
+            <th>RG</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Série</th>
+            <th>Grupo</th>
+            <th>Telefone</th>
+            <th>Celular</th>            
+            <th>Cadastrado em</th>
+            <th>Ativo</th>
+            <th>
+                <a href="{% url 'cadastrar-usuario' %}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top"  title="Novo"> <i class="fas fa-plus" aria-hidden="true"></i> Novo</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+       {% for campo in object_list %}
+        <tr>
+        <td>{{ campo.usuarioID }}</td>
+        <td>{{ campo.rg }}</td>
+        <td>{{ campo.nome | safe}}</td>
+        <td>{{ campo.sobrenome }}</td>
+        <td>{{ campo.serie }}</td>
+        <td>{{ campo.grupo }}</td>
+        <td>{{ campo.telefone }}</td>
+        <td>{{ campo.celular }}</td>        
+        <td>{{ campo.createdAt |date:"SHORT_DATETIME_FORMAT"}}</td>
+        <td>
+            {%if campo.is_active == True%}            
+                Sim
+            {%else%}
+                <span class="badge bg-danger">
+                    Não 
+                </span>
+            {%endif%}       
+        </td>        
+        <td>        
+            <a href="{% url 'editar-usuario' campo.usuarioID %}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"  title="Editar"> <i class="fas fa-edit" aria-hidden="true"></i> Editar</a>
+        </td>    
+        </tr>
+       {% empty %}
+        <!--tr> 
+            <td>
+            Nenhum Registro
+            </td>
+        </tr-->    
+       {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

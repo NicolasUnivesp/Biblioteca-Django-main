@@ -1,0 +1,52 @@
+{% extends 'base/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<div class="card text-dark bg-light mb-3">
+    <h2 class="card-header text-center">
+        Detalhes Empréstimo
+    </h2>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <b>Número: </b>{{object.emprestimoID}}
+            </div>
+            <div class="col-md-12">
+                <b>Livro: </b>{{object.livro }}
+            </div>
+            <div class="col-md-12">
+                <b>Marca: </b>{{object.marca}}
+            </div>
+            <div class="col-md-12">
+                <b>Data do Empréstimo: </b>{{object.dataEmprestimo|date:"SHORT_DATE_FORMAT"}}
+            </div>
+            <div class="col-md-12">
+                <b>Data Prazo Entrega: </b>{{object.dataPrazoDevolucao|date:"SHORT_DATE_FORMAT"}}
+            </div>
+            <div class="col-md-12">
+                <b>Data da Devolução: </b>{{object.dataDevolucao|date:"SHORT_DATE_FORMAT"|default_if_none:"- - -"}}
+            </div>
+            <div class="col-md-12">
+                <b>Avaliação: </b>{{object.avaliacao|default_if_none:"- - -"}}
+            </div>
+            <div class="col-md-12"><b>Ocorrência Ativa: </b>
+                {%if object.is_active == True%}            
+                    Sim
+                {%else%}
+                    Não
+                {%endif%}       
+            </div>    
+        </div>           
+
+        <div class="card-footer text-muted">  
+                <div class="btn-group">
+                    <a class="btn btn-primary mt-1 mx-1" title = "Voltar" href="{{ link }}">           
+                        <i class="fas fa-arrow-alt-circle-left"></i>
+                        Voltar
+                    </a>
+                </div>
+        </div>    
+</div>            
+{% endblock %}
